@@ -14,7 +14,11 @@ const postSchema = mongoose.Schema({
     likes : {
         type : Number,
         default : 0
-    }
+    },
+
+    likedUsers :{
+        type : [String], default : []
+    } 
 }, { timestamps : true });
 
 module.exports = mongoose.model('Post', postSchema);

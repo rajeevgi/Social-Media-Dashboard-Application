@@ -21,4 +21,7 @@ router.put("/updatePost/:id", authMiddleware, postController.updatePost);
 // Delete a Post
 router.delete("/deletePost/:id",authMiddleware, postController.deletePost);
 
+// Unlike or like Post
+router.post("/likePost/:id",authMiddleware, postController.UnlikeOrLikePost);
+
 module.exports = router;
