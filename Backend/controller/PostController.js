@@ -1,5 +1,4 @@
 const Post = require("../models/Post");
-const { post } = require("../routes/PostRoutes");
 
 // It will display All the Posts(Global).
 exports.getAllPost = async (req, res) => {
@@ -52,15 +51,16 @@ exports.updatePost = async (req, res) => {
     const { id } = req.params;
     const getPost = await Post.findById(id);
     if (!getPost) {
-        return res.status(404).json({ message: "Post not found!" });
+      return res.status(404).json({ message: "Post not found!" });
     }
-    
-    if (post.userId.toString() !== req.user.id) {
-        return res.status(403).json({ message: "Unauthorized" });
+
+    if (getPost.userId.toString() !== req.user.id) {
+      return res.status(403).json({ message: "Unauthorized" });
     }
-    
-    const updateData = {...req.body};
-    const updatedPost = await Post.findByIdAndUpdate(id, updateData, { new : true });
+
+    const updatedPost = await Post.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
     res
       .status(201)
       .json({ message: "Post Updated Successfully...", updatedPost });
@@ -68,3 +68,28 @@ exports.updatePost = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error!" });
   }
 };
+
+// Delete a Post (Owner or Admin)
+exports.deletePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const getPost = await Post.findById(id);
+    console.log("Post: ", getPost);
+    if(!getPost){
+      return res.status(404).json({ message : "Post Not Found!"});
+    }
+
+    if(getPost.userId.toString() !== req.user.id && req.user.role !== 'Admin'){
+      return res.status(403).json({ message : "Unauthorized!"});
+    }
+
+    const deletePost = await Post.findByIdAndDelete(id);
+    console.log("Deleted Data: ", deletePost);
+    res.status(200).json({ message : "Post Deleted Successfullly", deletePost});
+  } catch (error) {
+    return res.status(500).json({ message : "Internal Server Error!"});
+  }
+};
+
+
+
