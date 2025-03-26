@@ -28,7 +28,10 @@ app.use('/api/post', postRoutes);
 const commentRoutes = require('./routes/CommentRoutes');
 app.use('/api/comment', commentRoutes);
 
-const port = process.env.PORT;
+const dashboardRoutes = require('./routes/DashboardRoutes');
+app.use('/api/dashboard', dashboardRoutes);
+
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 })
