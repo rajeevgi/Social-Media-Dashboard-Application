@@ -1,4 +1,3 @@
-const { get } = require("mongoose");
 const Post = require("../models/Post");
 
 // It will display All the Posts(Global).
