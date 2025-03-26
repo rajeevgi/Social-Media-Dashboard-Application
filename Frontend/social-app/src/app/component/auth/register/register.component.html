@@ -1,1 +1,48 @@
-<p>register works!</p>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow-lg" style="width: 400px;">
+        <h3 class="text-center mb-3">Registration</h3>
+        <form (ngSubmit)="onRegister()">
+            <!-- Username Input with -->
+            <div class="mb-3">
+                <label for="uname" class="form-label">Username:</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                    <input class="form-control border-primary" type="text" name="uname" id="uname" [(ngModel)]="user.username" placeholder="Enter Username">
+                </div>
+            </div>
+            <!-- Email Input --> 
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                    <input class="form-control border-primary" type="email" name="email" id="email" [(ngModel)]="user.email" placeholder="Enter Email">
+                </div>
+            </div>
+
+            <!-- Password Input -->
+            <div class="mb-3">
+                <label for="password" class="form-label">Password:</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                    <input class="form-control border-primary" type="password" name="password" id="password" [(ngModel)]="user.password" placeholder="Enter Password">
+                </div>
+            </div>
+
+            <!-- Role Input -->
+            <div class="mb-3">
+                <label for="role" class="form-label">Select Role:</label>
+                <div class="select-group">
+                    <select name="Role" [(ngModel)]="user.role">
+                        <option>User</option>
+                        <option>Admin</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn btn-primary w-100">Register</button>
+            <p class="text-center mt-3">Already have an account?  
+                <a type="button" routerLink="/app-login" class="text-primary fw-bold">Login</a>
+            </p>
+        </form>
+    </div>
+</div>
