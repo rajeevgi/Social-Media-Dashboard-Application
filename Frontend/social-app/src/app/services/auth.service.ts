@@ -13,11 +13,11 @@ export class AuthService {
 
   // Login
   login(data : any) : Observable<any> {
-    return this.http.post<any>(`${this.authUrl}/login`, data, { withCredentials : true });
+    return this.http.post<any>(`${this.authUrl}/login`, data);
   }
 
   // Register
   register(data : any) : Observable<any> {
-    return this.http.post<any>(`${this.authUrl}/register`, data, { withCredentials : true });
+    return this.http.post<any>(`${this.authUrl}/register`, data);
   }
 }

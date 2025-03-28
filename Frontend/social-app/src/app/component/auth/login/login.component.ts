@@ -20,12 +20,12 @@ export class LoginComponent {
     this.authService.login(this.user).subscribe((res: any) => {
       if (res.user.role === 'Admin') {
         localStorage.setItem('User-data', JSON.stringify(res.user));
-        localStorage.setItem('token', JSON.stringify(res.token));
+        localStorage.setItem('token', res.token);
         alert(`${res.user.username} login successful...`);
         this.router.navigateByUrl('app-admin-dashboard');
       } else if(res.user.role === 'User') {
         localStorage.setItem('User-data', JSON.stringify(res.user));
-        localStorage.setItem('token', JSON.stringify(res.token));
+        localStorage.setItem('token',res.token);
         alert(`${res.user.username} login successful...`);
         this.router.navigateByUrl('app-user-dashboard');
       }

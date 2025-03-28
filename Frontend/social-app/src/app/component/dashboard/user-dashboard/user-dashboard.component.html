@@ -1,1 +1,289 @@
-<p>user-dashboard works!</p>
+<div class="parent">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-3">
+        <a class="navbar-brand" href="#">Welcome, {{ getUsernameFromLocalStorage() }}</a>
+        <ul class="navbar-nav ms-auto d-flex flex-row gap-3">
+            <li class="nav-item">
+                <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/notification.png?raw=true"
+                    width="24">
+            </li>
+            <li class="nav-item">
+                <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/inbox.png?raw=true" width="24">
+            </li>
+            <li class="nav-item">
+                <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/video.png?raw=true" width="24">
+            </li>
+            <li class="nav-item">
+                <i class="fa-solid fa-plus" type="button" routerLink="/create-post">Add</i>
+            </li>
+        </ul>
+        <form class="d-flex ms-3">
+            <input class="form-control me-2" type="search" placeholder="Search">
+        </form>
+        <!-- User Profile Dropdown -->
+        <div class="nav-user-icon ms-3 position-relative">
+            <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/profile-pic.png?raw=true" alt="User" class="dropdown-toggle" (click)="toggleUserDropdown()">
+
+            <div *ngIf="dropdownOpen" class="dropdown-menu show bg-white shadow border-0 position-absolute end-0 mt-2">
+                <a class="dropdown-item text-dark" href="#">Profile</a>
+                <a class="dropdown-item text-danger" (click)="logout()" href="#">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="container-fluid mt-3">
+        <div class="row">
+
+            <!-- Left Sidebar -->
+            <div class="col-md-3">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h6>Important Links</h6>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="#">
+                                    <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/news.png?raw=true"
+                                        width="20"> Latest News
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/friends.png?raw=true"
+                                        width="20"> Friends
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/group.png?raw=true"
+                                        width="20"> Group
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/marketplace.png?raw=true"
+                                        width="20"> Marketplace
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/watch.png?raw=true"
+                                        width="20"> Watch
+                                </a>
+                            </li>
+                            <li><a href="#">See More</a></li>
+                        </ul>
+                        <hr>
+                        <p>Your Shortcuts</p>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="#">
+                                    <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/shortcut-1.png?raw=true"
+                                        width="20"> Web Developers
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/shortcut-2.png?raw=true"
+                                        width="20"> Android Developers
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/shortcut-3.png?raw=true"
+                                        width="20"> Web Design
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/shortcut-4.png?raw=true"
+                                        width="20"> HTML & CSS
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-6">
+                <!-- Story Gallery -->
+                <div class="d-flex gap-2 overflow-auto mb-3">
+                    <div>
+                        <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/video.png?raw=true"
+                            width="60">
+                        <p>Post Story</p>
+                    </div>
+                    <div>
+                        <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/member-4.png?raw=true"
+                            width="60">
+                        <p>Ben</p>
+                    </div>
+                    <div>
+                        <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/post-story-1%20(3).jpg?raw=true"
+                            width="60">
+                        <p>Sam</p>
+                    </div>
+                    <div>
+                        <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/animated-1.png?raw=true"
+                            width="60">
+                        <p>Ron</p>
+                    </div>
+                    <div>
+                        <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/post-story-3.jpg?raw=true"
+                            width="60">
+                        <p>Steve</p>
+                    </div>
+                </div>
+
+                <!-- Write Post -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-2">
+                            <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/profile-pic.png?raw=true"
+                                alt="">
+                            <div class="ms-2">
+                                <p class="mb-0">{{ getUsernameFromLocalStorage()}}</p>
+                                <small>Public <i class="fas fa-caret-down"></i></small>
+                            </div>
+                        </div>
+                        <textarea class="form-control mb-2" rows="3"
+                            placeholder="What's on your mind, {{ getUsernameFromLocalStorage()}}?"
+                            [(ngModel)]="postData"></textarea>
+                        <div class="d-flex gap-3">
+                            <a href="#">
+                                <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/live-video.png?raw=true"
+                                    width="20"> Live Video
+                            </a>
+                            <a href="#">
+                                <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/photo.png?raw=true"
+                                    width="20"> Photo/Video
+                            </a>
+                            <a href="#">
+                                <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/feeling.png?raw=true"
+                                    width="20"> Feeling/Activity
+                            </a>
+                            <a type="button" (click)="addPost()"
+                                class="btn btn-sm btn-primary fw-semibold px-2 py-0 rounded shadow">
+                                <i class="fas fa-paper-plane me-1"></i> Post
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Post -->
+                <div *ngFor="let post of postList" class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <div class="d-flex align-items-center">
+                                <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/profile-pic.png?raw=true"
+                                    alt="">
+                                <div class="ms-2">
+                                    <h5 class="card-title">{{ post.userId?.username || 'User' }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">
+                                        {{ post.createdAt | date: 'MMM d, h:mm a' }}
+                                    </h6>
+                                </div>
+                            </div>
+                            <!-- Dropdown menu for delete post -->
+                            <div class="dropdown">
+                                <a href="#" (click)="toggleDropdown(post._id!); $event.preventDefault();">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </a>
+                                <div *ngIf="showDropdown[post._id!]"
+                                    class="dropdown-menu show position-absolute bg-white shadow p-2">
+                                    <button *ngIf="post.userId?.username === getUsernameFromLocalStorage()" class="dropdown-item text-danger" (click)="deletePost(post._id!)">🗑 Delete Post</button>
+                                    <button *ngIf="post.userId?.username === getUsernameFromLocalStorage()" class="dropdown-item text-success" (click)="editPost(post._id!)">📁 Update Post</button>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="card-text">{{ post.content }}</p>
+                        <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/member-1.jpg?raw=true"
+                            class="post-img" alt="post">
+                        <div class="d-flex justify-content-between">
+                            <span>👍 {{ post.likes }}</span>
+                            <span (click)="toggleComment(post._id)" style="cursor: pointer;">💬 {{ post.likedUsers?.length }}</span>
+                        </div>
+                        <!-- Comment Box (Visible when user clicks on comment icon) -->
+                         <div class="mt-2" *ngIf="post.showCommentBox">
+                            <textarea class="form-control" [(ngModel)]="post.commentText" placeholder="Write a comment..."></textarea>
+                            <button class="btn btn-primary btn-sm mt-2" (click)="addComment(post)">Post Comment</button>
+                         </div>
+                         <!-- Show Comments -->
+                          <div *ngFor="let comment of post.comments" class="mt-2">
+                            <strong>{{ comment.userId?.username }}</strong> {{ comment.content }}
+                          </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary load-more-btn">Load More</button>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="col-md-3">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h6>Events <a href="#" class="float-end">See All</a></h6>
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="me-2 text-center">
+                                <h5>18</h5><small>March</small>
+                            </div>
+                            <div>
+                                <h6>Social Media</h6>
+                                <p><i class="fas fa-map-marker-alt"></i> Willson Tech Park</p>
+                                <a href="#">More Info</a>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="me-2 text-center">
+                                <h5>22</h5><small>March</small>
+                            </div>
+                            <div>
+                                <h6>Mobile Marketing</h6>
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h6>Advertisement</h6>
+                                        <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/advertisement.png?raw=true"
+                                            class="w-100 rounded">
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6>Conversation</h6>
+                                        <div class="d-flex gap-2 mb-2 align-items-center">
+                                            <div class="position-relative online-list">
+                                                <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/member-1.jpg?raw=true"
+                                                    alt="">
+                                                <div class="online"></div>
+                                            </div>
+                                            <p class="mb-0">Jasmin Kaur</p>
+                                        </div>
+                                        <div class="d-flex gap-2 mb-2 align-items-center">
+                                            <div class="position-relative online-list">
+                                                <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/profile-pic.png?raw=true"
+                                                    alt="">
+                                                <div class="online"></div>
+                                            </div>
+                                            <p class="mb-0">Ben Tennyson</p>
+                                        </div>
+                                        <div class="d-flex gap-2 align-items-center">
+                                            <div class="position-relative online-list">
+                                                <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/member-1.jpg?raw=true"
+                                                    alt="">
+                                                <div class="online"></div>
+                                            </div>
+                                            <p class="mb-0">Vaishnavi G.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 Rajeev. All rights reserved.</p>
+    </div>

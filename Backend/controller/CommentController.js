@@ -20,6 +20,23 @@ exports.addComment = async (req, res) => {
   }
 };
 
+// Get all the comments
+exports.getComments = async (req, res) => {
+  try {
+    const { postId } = req.params;
+
+    if (!postId) {
+      return res.status(400).json({ message: "Post ID is required!" });
+    }
+
+    const comments = await Comment.find({ postId }).populate('userId', 'username').sort({ createdAt : -1});
+
+    res.status(200).json({ comments });
+  } catch (error) {
+    return res.status(500).json({ message : "Internal Server Error!" });
+  }
+};
+
 // Delete Comments from an post
 exports.deleteComment = async (req, res) => {
   try {

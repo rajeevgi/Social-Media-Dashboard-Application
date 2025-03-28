@@ -9,7 +9,7 @@ exports.getAllPost = async (req, res) => {
     if (fetchAll.length === 0) {
       return res.status(404).json({ message: "No Posts to show!" });
     }
-    res.status(201).json({ message: "All Posts are: ", fetchAll });
+    res.status(200).json({ message: "All Posts are: ", fetchAll });
   } catch (error) {
     return res.status(500).json({ message: "Internal Server Error!" });
   }
