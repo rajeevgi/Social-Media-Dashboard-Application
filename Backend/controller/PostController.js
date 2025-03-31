@@ -4,7 +4,9 @@ const Post = require("../models/Post");
 exports.getAllPost = async (req, res) => {
   try {
     const fetchAll = await Post.find()
-      .populate("userId", "username")
+      .populate({
+        path : "content",
+        path : "userId", select : "username"})
       .sort({ createdAt: -1 });
     if (fetchAll.length === 0) {
       return res.status(404).json({ message: "No Posts to show!" });

@@ -6,8 +6,11 @@ const router = express.Router();
 // Add a comment
 router.post('/addComment',authMiddleware, commentController.addComment);
 
+// Get All Comments by PostID
+router.get('/getAllComments/:postId',authMiddleware, commentController.getComments);
+
 // Get All Comments
-router.get('/getAllComments/:id', authMiddleware, commentController.getComments);
+// router.get('/getAllComments', commentController.getComments);
 
 // Delete a comment
 router.delete('/deleteComment/:id',authMiddleware, commentController.deleteComment);

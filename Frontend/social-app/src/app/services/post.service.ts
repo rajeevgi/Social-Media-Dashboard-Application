@@ -39,7 +39,7 @@ export class PostService {
   }
 
   getComments(postId : string) : Observable<any> {
-    return this.http.get<any>(`${this.commentUrl}/getComments/${postId}`);
+    return this.http.get(`${this.commentUrl}/getAllComments/${postId}`);
   }
 
 

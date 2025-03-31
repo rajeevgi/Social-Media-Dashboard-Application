@@ -30,7 +30,22 @@ export class UserDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.postService.getAllPosts().subscribe((res: any) => {
       this.postList = res.fetchAll;
+
+      this.postList.forEach(post => {
+        this.loadComments(post);
+      });
     });
+  }
+
+  loadComments (post : any){
+    this.postService.getComments(post._id).subscribe(( res : any ) => {
+      post.comments = res.comments || [];
+      post.commentCount = post.comments.length;
+    },
+    (error) => {
+      console.log('Error Fetching comments.', error);
+    }
+  );
   }
 
   getUsernameFromLocalStorage(): string | null {
@@ -107,31 +122,30 @@ export class UserDashboardComponent implements OnInit {
     });
   }
 
-  addComment(post : any) {
+  addComment(post: any) {
     if (!post.commentText || post.commentText.trim() === '') {
       alert('Comment cannot be empty');
-      return ;
+      return;
     }
-    const newComment = { postId : post._id,  content: post.commentText };
+  
+    const newComment = { postId: post._id, content: post.commentText };
+  
     this.postService.addComment(newComment).subscribe(
       (res: any) => {
         alert(`${this.getUsernameFromLocalStorage()} has commented on your post..`);
-        
-        // It wil add new comments to the post
-        if(!post.comments){
+  
+        this.loadComments(post);
+  
+        if (!post.comments) {
           post.comments = [];
-        }
-        post.comments.push(res.newComment);
-
-        // Total comments count
-        post.likedUsers.length += 1;
-        
+        }  
         post.commentText = '';
         post.showCommentBox = false;
       },
       (error) => {
-        console.error('Error creating post:', error);
+        console.error("Error creating comment:", error);
       }
     );
   }
+  
 }
