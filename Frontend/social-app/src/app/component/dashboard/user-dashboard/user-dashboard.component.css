@@ -122,3 +122,140 @@
     }
   }
   
+
+  /* Comment sections */
+  /* Comments Section */
+.comments-section {
+  background: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin-top: 10px;
+}
+
+/* Comments List */
+.comment-list {
+  max-height: 250px;
+  overflow-y: auto;
+  padding-bottom: 10px;
+}
+
+/* Individual Comment */
+.comment {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+}
+
+/* User Profile Picture */
+.comment-user-pic {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+/* Comment Content */
+.comment-content {
+  background: #f0f2f5;
+  padding: 10px 14px;
+  border-radius: 15px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.comment-username {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.comment-text {
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+/* Add Comment Input */
+.comment-input {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+.comment-input input {
+  flex: 1;
+  border: none;
+  padding: 8px;
+  border-radius: 20px;
+  background: #f0f2f5;
+  outline: none;
+}
+
+.comment-input button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+/* Delete Icon */
+.delete-icon {
+  color: red;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 10px;
+  display: inline-block;
+  transition: transform 0.2s ease-in-out;
+}
+
+.delete-icon:hover {
+  transform: scale(1.2);
+}
+
+/* Update Icon */
+.edit-input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.save-btn, .cancel-btn {
+  margin-left: 5px;
+  padding: 3px 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.save-btn {
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.cancel-btn {
+  background-color: gray;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+
+.edit-icon {
+  color: green;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 10px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.edit-icon:hover {
+  transform: scale(1.2);
+}
+  

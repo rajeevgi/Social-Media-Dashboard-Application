@@ -16,7 +16,7 @@ import { Comment } from '../../../model/comment';
 export class UserDashboardComponent implements OnInit {
   user: User = new User();
   post: Post = new Post();
-  comment : Comment = new Comment();
+  comment: Comment = new Comment();
   showDropdown: { [key: string]: boolean } = {};
 
   dropdownOpen: boolean = false;
@@ -31,21 +31,50 @@ export class UserDashboardComponent implements OnInit {
     this.postService.getAllPosts().subscribe((res: any) => {
       this.postList = res.fetchAll;
 
-      this.postList.forEach(post => {
+      this.postList.forEach((post) => {
         this.loadComments(post);
       });
     });
   }
 
-  loadComments (post : any){
-    this.postService.getComments(post._id).subscribe(( res : any ) => {
-      post.comments = res.comments || [];
-      post.commentCount = post.comments.length;
-    },
-    (error) => {
-      console.log('Error Fetching comments.', error);
+  loadComments(post: any) {
+    this.postService.getComments(post._id).subscribe(
+      (res: any) => {
+        post.comments = res.comments || [];
+        post.commentCount = post.comments.length;
+      },
+      (error) => {
+        console.log('Error Fetching comments.', error);
+      }
+    );
+  }
+
+  addComment(post: any) {
+    if (!post.commentText || post.commentText.trim() === '') {
+      alert('Comment cannot be empty');
+      return;
     }
-  );
+
+    const newComment = { postId: post._id, content: post.commentText };
+
+    this.postService.addComment(newComment).subscribe(
+      (res: any) => {
+        alert(
+          `${this.getUsernameFromLocalStorage()} has commented on your post..`
+        );
+
+        this.loadComments(post);
+
+        if (!post.comments) {
+          post.comments = [];
+        }
+        post.commentText = '';
+        post.showCommentBox = false;
+      },
+      (error) => {
+        console.error('Error creating comment:', error);
+      }
+    );
   }
 
   getUsernameFromLocalStorage(): string | null {
@@ -122,30 +151,62 @@ export class UserDashboardComponent implements OnInit {
     });
   }
 
-  addComment(post: any) {
-    if (!post.commentText || post.commentText.trim() === '') {
-      alert('Comment cannot be empty');
-      return;
+  deleteComment(post: any, commentId: string) {
+    if (confirm('Are you sure want to delete this comment?')) {
+      this.postService.deleteComment(commentId).subscribe(
+        (res: any) => {
+          alert('Comment Deleted Successfully...');
+          post.comments = post.comments.filter(
+            (comment: { _id: string }) => comment._id !== commentId
+          );
+          if (post.commentCount > 0) {
+            post.commentCount--; // Reduce count in UI
+          }
+        },
+        (error) => {
+          console.error('Error Detecting comment.', error);
+        }
+      );
     }
-  
-    const newComment = { postId: post._id, content: post.commentText };
-  
-    this.postService.addComment(newComment).subscribe(
-      (res: any) => {
-        alert(`${this.getUsernameFromLocalStorage()} has commented on your post..`);
-  
-        this.loadComments(post);
-  
-        if (!post.comments) {
-          post.comments = [];
-        }  
-        post.commentText = '';
-        post.showCommentBox = false;
-      },
-      (error) => {
-        console.error("Error creating comment:", error);
+  }
+
+  updateComment(post: any, commentId: string) {
+    // Find the comment in the post.comments array
+    post.comments = post.comments.map(
+      (comment: {
+        _id: string;
+        isEditing: boolean;
+        editText: any;
+        content: any;
+      }) => {
+        if (comment._id === commentId) {
+          comment.isEditing = true; // Enable edit mode
+          comment.editText = comment.content; // Store original text
+        }
+        return comment;
       }
     );
   }
-  
+
+  saveUpdatedComment(post: any, comment: any) {
+    if (!comment.editText.trim()) {
+      alert('Comment cannot be empty!');
+      return;
+    }
+
+    this.postService
+      .updateComment(comment._id, { content: comment.editText })
+      .subscribe(
+        (res: any) => {
+          alert('Comment Updated Successfully!');
+
+          // Update comment in UI
+          comment.content = comment.editText;
+          comment.isEditing = false;
+        },
+        (error) => {
+          console.error('Error updating comment:', error);
+        }
+      );
+  }
 }

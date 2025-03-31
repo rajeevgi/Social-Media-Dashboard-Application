@@ -42,5 +42,12 @@ export class PostService {
     return this.http.get(`${this.commentUrl}/getAllComments/${postId}`);
   }
 
+  deleteComment(commentId : string) : Observable<any>{
+    return this.http.delete(`${this.commentUrl}/deleteComment/${commentId}`)
+  }
+
+  updateComment(commentId : string, data : any) : Observable<any> {
+    return this.http.put<any>(`${this.commentUrl}/editComment/${commentId}`, data);
+  }
 
 }

@@ -22,7 +22,8 @@
         </form>
         <!-- User Profile Dropdown -->
         <div class="nav-user-icon ms-3 position-relative">
-            <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/profile-pic.png?raw=true" alt="User" class="dropdown-toggle" (click)="toggleUserDropdown()">
+            <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/profile-pic.png?raw=true" alt="User"
+                class="dropdown-toggle" (click)="toggleUserDropdown()">
 
             <div *ngIf="dropdownOpen" class="dropdown-menu show bg-white shadow border-0 position-absolute end-0 mt-2">
                 <a class="dropdown-item text-dark" href="#">Profile</a>
@@ -192,8 +193,12 @@
                                 </a>
                                 <div *ngIf="showDropdown[post._id!]"
                                     class="dropdown-menu show position-absolute bg-white shadow p-2">
-                                    <button *ngIf="post.userId?.username === getUsernameFromLocalStorage()" class="dropdown-item text-danger" (click)="deletePost(post._id!)">🗑 Delete Post</button>
-                                    <button *ngIf="post.userId?.username === getUsernameFromLocalStorage()" class="dropdown-item text-success" (click)="editPost(post._id!)">📁 Update Post</button>
+                                    <button *ngIf="post.userId?.username === getUsernameFromLocalStorage()"
+                                        class="dropdown-item text-danger" (click)="deletePost(post._id!)">🗑 Delete
+                                        Post</button>
+                                    <button *ngIf="post.userId?.username === getUsernameFromLocalStorage()"
+                                        class="dropdown-item text-success" (click)="editPost(post._id!)">📁 Update
+                                        Post</button>
                                 </div>
                             </div>
                         </div>
@@ -202,17 +207,52 @@
                             class="post-img" alt="post">
                         <div class="d-flex justify-content-between">
                             <span>👍 {{ post.likes }}</span>
-                            <span (click)="toggleComment(post._id)" style="cursor: pointer;">💬 {{ post.commentCount }}</span>
+                            <span (click)="toggleComment(post._id)" style="cursor: pointer;">💬 {{ post.commentCount
+                                }}</span>
                         </div>
-                        <!-- Comment Box (Visible when user clicks on comment icon) -->
-                         <div class="mt-2" *ngIf="post.showCommentBox">
-                            <textarea class="form-control" [(ngModel)]="post.commentText" placeholder="Write a comment..."></textarea>
-                            <button class="btn btn-primary btn-sm mt-2" (click)="addComment(post)">Post Comment</button>
-                         </div>
-                         <!-- Show Comments -->
-                          <div *ngFor="let comment of post.comments" class="mt-2">
-                            <strong>{{ comment.userId?.username }}</strong> {{ comment.content }}
-                          </div>
+                        <!-- Comments Section -->
+                        <div class="comments-section" *ngIf="post.showCommentBox">
+                            <!-- Existing Comments -->
+                            <div class="comment-list">
+                                <div *ngFor="let comment of post.comments" class="comment">
+                                    <!-- User Profile Pic -->
+                                    <img [src]="comment.userId?.profilePic || 'assets/default-user.png'"
+                                        class="comment-user-pic" />
+
+                                    <!-- Comment Content -->
+                                    <div class="comment-content">
+                                        <strong class="comment-username">{{ comment.userId?.username }}</strong>
+
+                                        <!-- Inline Editing -->
+                                        <div *ngIf="comment.isEditing">
+                                            <input type="text" [(ngModel)]="comment.editText" class="edit-input" />
+                                            <button class="save-btn" (click)="saveUpdatedComment(post, comment)">Save</button>
+                                            <button class="cancel-btn" (click)="comment.isEditing = false">Cancel</button>
+                                        </div>
+
+                                        <p *ngIf="!comment.isEditing" class="comment-text">{{ comment.content }}</p>
+                                    </div>
+
+                                    <!-- Delete Icon (Only for comment owner) -->
+                                    <i *ngIf="comment.userId?.username === getUsernameFromLocalStorage()"
+                                        class="fa fa-trash delete-icon" (click)="deleteComment(post, comment._id)">
+                                    </i>
+                                    &nbsp;&nbsp;
+                                    <!-- Update Icon (Only for comment owner ) -->
+                                    <i *ngIf="comment.userId?.username === getUsernameFromLocalStorage()"
+                                        class="fa-solid fa-pen-to-square edit-icon" (click)="updateComment(post, comment._id)">
+                                    </i>
+
+                                </div>
+                            </div>
+
+                            <!-- Add New Comment -->
+                            <div class="comment-input">
+                                <input type="text" [(ngModel)]="post.commentText" placeholder="Write a comment..." />
+                                <button class="btn btn-primary" (click)="addComment(post)">Post comment</button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
