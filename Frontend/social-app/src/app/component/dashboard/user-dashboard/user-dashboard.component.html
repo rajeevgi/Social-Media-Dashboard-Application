@@ -194,7 +194,7 @@
                                 <div *ngIf="showDropdown[post._id!]"
                                     class="dropdown-menu show position-absolute bg-white shadow p-2">
                                     <button *ngIf="post.userId?.username === getUsernameFromLocalStorage()"
-                                        class="dropdown-item text-danger" (click)="deletePost(post._id!)">🗑 Delete
+                                        class="dropdown-item text-danger" (click)="deletePost(post.id!)">🗑 Delete
                                         Post</button>
                                     <button *ngIf="post.userId?.username === getUsernameFromLocalStorage()"
                                         class="dropdown-item text-success" (click)="editPost(post._id!)">📁 Update
@@ -206,9 +206,18 @@
                         <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/member-1.jpg?raw=true"
                             class="post-img" alt="post">
                         <div class="d-flex justify-content-between">
-                            <span>👍 {{ post.likes }}</span>
-                            <span (click)="toggleComment(post._id)" style="cursor: pointer;">💬 {{ post.commentCount
-                                }}</span>
+                            <span (click)="toggleLikePost(post)" style="cursor: pointer;">
+                                <i 
+                                  class="mr-1"
+                                  [class.fas]="post.likedUsers.includes(getUserIdFromLocalStorage())"
+                                  [class.far]="!post.likedUsers.includes(getUserIdFromLocalStorage())"
+                                  class="fa-thumbs-up text-primary">
+                                </i>
+                                {{ post.likes }}
+                              </span>                              
+                              
+                              
+                            <span (click)="toggleComment(post._id)" style="cursor: pointer;">💬 {{ post.commentCount }}</span>
                         </div>
                         <!-- Comments Section -->
                         <div class="comments-section" *ngIf="post.showCommentBox">

@@ -129,7 +129,7 @@ exports.UnlikeOrLikePost = async (req, res) => {
     }
 
     await getPost.save();
-    res.json({ message: "Post updated successfully", likes: getPost.likes });
+    res.json({ message: "Post updated successfully", likes: getPost.likes, likedUsers : getPost.likedUsers });
   } catch (error) {
     console.error("Like/Unlike Post Error:", error);
     return res.status(500).json({ message: "Internal Server Error!" });
