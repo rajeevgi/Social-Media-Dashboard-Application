@@ -2,14 +2,15 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { User } from '../../../model/user';
 import { PostService } from '../../../services/post.service';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Post } from '../../../model/post';
 import { FormsModule } from '@angular/forms';
 import { Comment } from '../../../model/comment';
+import { CreatePostComponent } from '../../posts/create-post/create-post.component';
 
 @Component({
   selector: 'app-user-dashboard',
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, FormsModule, CreatePostComponent],
   templateUrl: './user-dashboard.component.html',
   styleUrl: './user-dashboard.component.css',
 })
@@ -25,7 +26,11 @@ export class UserDashboardComponent implements OnInit {
 
   postData: string = '';
 
-  constructor(private postService: PostService, private cd : ChangeDetectorRef) {}
+  constructor(
+    private postService: PostService,
+    private router: Router,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.postService.getAllPosts().subscribe((res: any) => {
@@ -37,6 +42,15 @@ export class UserDashboardComponent implements OnInit {
     });
   }
 
+  // Search User
+  username: string = '';
+  searchUser() {
+    if (this.username.trim()) {
+      this.router.navigate(['/get-user', this.username.trim()]);
+    }
+  }
+
+  // Comment
   getUsernameFromLocalStorage(): string | null {
     const userData = localStorage.getItem('User-data');
     if (userData) {
@@ -100,16 +114,16 @@ export class UserDashboardComponent implements OnInit {
     );
   }
 
-
+  // Post
   addPost() {
     if (!this.postData.trim()) {
       alert('Post cannot be empty!');
       return;
     }
 
-    const newPost = { 
+    const newPost = {
       content: this.postData,
-      username : this.getUsernameFromLocalStorage()
+      username: this.getUsernameFromLocalStorage(),
     };
 
     this.postService.createPost(newPost).subscribe(
@@ -144,47 +158,44 @@ export class UserDashboardComponent implements OnInit {
     });
   }
 
-  getUserIdFromLocalStorage(): string | null  {
+  getUserIdFromLocalStorage(): string | null {
     const userData = localStorage.getItem('User-data');
     if (userData) {
       try {
         const parsedData = JSON.parse(userData);
-        return parsedData.id || '';  
+        return parsedData.id || '';
       } catch (error) {
-        console.error("Error parsing User-data:", error);
+        console.error('Error parsing User-data:', error);
         return '';
       }
     }
     return '';
   }
-  
 
   toggleLikePost(post: any) {
     const userId = this.getUserIdFromLocalStorage();
-  
+
     if (!userId) {
-      alert("User ID not found! Please log in.");
+      alert('User ID not found! Please log in.');
       return;
     }
-  
+
     this.postService.likePost(post._id, userId).subscribe(
       (res: any) => {
-        if (res && res.message === "Post updated successfully") {
-          // ✅ Update UI Immediately
+        if (res && res.message === 'Post updated successfully') {
+          // Update UI Immediately
           post.likes = res.likes;
           post.likedUsers = [...res.likedUsers]; // Make sure to clone array
         }
       },
-      (error) => console.error("Error Liking Post", error)
+      (error) => console.error('Error Liking Post', error)
     );
   }
-  
-
 
   toggleUserDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
-  
+
   deleteComment(post: any, commentId: string) {
     if (confirm('Are you sure want to delete this comment?')) {
       this.postService.deleteComment(commentId).subscribe(
@@ -203,7 +214,7 @@ export class UserDashboardComponent implements OnInit {
       );
     }
   }
-  
+
   updateComment(post: any, commentId: string) {
     // Find the comment in the post.comments array
     post.comments = post.comments.map(
@@ -221,27 +232,27 @@ export class UserDashboardComponent implements OnInit {
       }
     );
   }
-  
+
   saveUpdatedComment(post: any, comment: any) {
     if (!comment.editText.trim()) {
       alert('Comment cannot be empty!');
       return;
     }
-    
+
     this.postService
-    .updateComment(comment._id, { content: comment.editText })
-    .subscribe(
-      (res: any) => {
-        alert('Comment Updated Successfully!');
-        
-        // Update comment in UI
-        comment.content = comment.editText;
-        comment.isEditing = false;
-      },
-      (error) => {
-        console.error('Error updating comment:', error);
-      }
-    );
+      .updateComment(comment._id, { content: comment.editText })
+      .subscribe(
+        (res: any) => {
+          alert('Comment Updated Successfully!');
+
+          // Update comment in UI
+          comment.content = comment.editText;
+          comment.isEditing = false;
+        },
+        (error) => {
+          console.error('Error updating comment:', error);
+        }
+      );
   }
 
   logout() {
@@ -251,4 +262,5 @@ export class UserDashboardComponent implements OnInit {
     window.location.href = '/app-login';
   }
 
+  
 }

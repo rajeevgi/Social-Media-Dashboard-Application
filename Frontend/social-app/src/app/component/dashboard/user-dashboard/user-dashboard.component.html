@@ -1,7 +1,8 @@
 <div class="parent">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-3">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white shadow-sm px-3">
         <a class="navbar-brand" href="#">Welcome, {{ getUsernameFromLocalStorage() }}</a>
+
         <ul class="navbar-nav ms-auto d-flex flex-row gap-3">
             <li class="nav-item">
                 <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/notification.png?raw=true"
@@ -14,12 +15,17 @@
                 <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/video.png?raw=true" width="24">
             </li>
             <li class="nav-item">
-                <i class="fa-solid fa-plus" type="button" routerLink="/create-post">Add</i>
+                <!-- Modal Trigger Button -->
+                <i class="fa-solid fa-plus" type="button" data-bs-toggle="modal" data-bs-target="#createPostModal">
+                    Add</i>
             </li>
         </ul>
-        <form class="d-flex ms-3">
-            <input class="form-control me-2" type="search" placeholder="Search">
+
+        <form class="d-flex ms-3" (ngSubmit)="searchUser()" #searchForm="ngForm">
+            <input class="form-control me-2" type="search" placeholder="Search" [(ngModel)]="username" name="username"
+                required>
         </form>
+
         <!-- User Profile Dropdown -->
         <div class="nav-user-icon ms-3 position-relative">
             <img src="https://github.com/sanketbodke/sbook/blob/main/Socialbook_img/profile-pic.png?raw=true" alt="User"
@@ -32,12 +38,41 @@
         </div>
     </nav>
 
+    <!-- Modal -->
+    <div class="modal" id="createPostModal" tabindex="-1" aria-labelledby="createPostModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createPostModalLabel">Create Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <!-- ⬇️ Embed your create-post component here -->
+                    <app-create-post/>
+
+                    <!-- <textarea class="form-control mb-2" rows="3"
+                    placeholder="What's on your mind, {{ getUsernameFromLocalStorage()}}?"
+                    [(ngModel)]="postData"></textarea>
+                    <a type="button" (click)="addPost()"
+                    class="btn btn-sm btn-primary fw-semibold px-2 py-0 rounded shadow">
+                    <i class="fas fa-paper-plane me-1"></i> Post
+                </a> -->
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
     <!-- Content -->
     <div class="container-fluid mt-3">
         <div class="row">
 
             <!-- Left Sidebar -->
-            <div class="col-md-3">
+            <div class="col-md-3 sticky-sidebar">
                 <div class="card mb-3">
                     <div class="card-body">
                         <h6>Important Links</h6>
@@ -194,7 +229,7 @@
                                 <div *ngIf="showDropdown[post._id!]"
                                     class="dropdown-menu show position-absolute bg-white shadow p-2">
                                     <button *ngIf="post.userId?.username === getUsernameFromLocalStorage()"
-                                        class="dropdown-item text-danger" (click)="deletePost(post.id!)">🗑 Delete
+                                        class="dropdown-item text-danger" (click)="deletePost(post._id!)">🗑 Delete
                                         Post</button>
                                     <button *ngIf="post.userId?.username === getUsernameFromLocalStorage()"
                                         class="dropdown-item text-success" (click)="editPost(post._id!)">📁 Update
@@ -207,17 +242,16 @@
                             class="post-img" alt="post">
                         <div class="d-flex justify-content-between">
                             <span (click)="toggleLikePost(post)" style="cursor: pointer;">
-                                <i 
-                                  class="mr-1"
-                                  [class.fas]="post.likedUsers.includes(getUserIdFromLocalStorage())"
-                                  [class.far]="!post.likedUsers.includes(getUserIdFromLocalStorage())"
-                                  class="fa-thumbs-up text-primary">
+                                <i class="mr-1" [class.fas]="post.likedUsers.includes(getUserIdFromLocalStorage())"
+                                    [class.far]="!post.likedUsers.includes(getUserIdFromLocalStorage())"
+                                    class="fa-thumbs-up text-primary">
                                 </i>
                                 {{ post.likes }}
-                              </span>                              
-                              
-                              
-                            <span (click)="toggleComment(post._id)" style="cursor: pointer;">💬 {{ post.commentCount }}</span>
+                            </span>
+
+
+                            <span (click)="toggleComment(post._id)" style="cursor: pointer;">💬 {{ post.commentCount
+                                }}</span>
                         </div>
                         <!-- Comments Section -->
                         <div class="comments-section" *ngIf="post.showCommentBox">
@@ -235,8 +269,10 @@
                                         <!-- Inline Editing -->
                                         <div *ngIf="comment.isEditing">
                                             <input type="text" [(ngModel)]="comment.editText" class="edit-input" />
-                                            <button class="save-btn" (click)="saveUpdatedComment(post, comment)">Save</button>
-                                            <button class="cancel-btn" (click)="comment.isEditing = false">Cancel</button>
+                                            <button class="save-btn"
+                                                (click)="saveUpdatedComment(post, comment)">Save</button>
+                                            <button class="cancel-btn"
+                                                (click)="comment.isEditing = false">Cancel</button>
                                         </div>
 
                                         <p *ngIf="!comment.isEditing" class="comment-text">{{ comment.content }}</p>
@@ -249,7 +285,8 @@
                                     &nbsp;&nbsp;
                                     <!-- Update Icon (Only for comment owner ) -->
                                     <i *ngIf="comment.userId?.username === getUsernameFromLocalStorage()"
-                                        class="fa-solid fa-pen-to-square edit-icon" (click)="updateComment(post, comment._id)">
+                                        class="fa-solid fa-pen-to-square edit-icon"
+                                        (click)="updateComment(post, comment._id)">
                                     </i>
 
                                 </div>
@@ -269,7 +306,7 @@
             </div>
 
             <!-- Right Sidebar -->
-            <div class="col-md-3">
+            <div class="col-md-3 sticky-sidebar">
                 <div class="card mb-3">
                     <div class="card-body">
                         <h6>Events <a href="#" class="float-end">See All</a></h6>

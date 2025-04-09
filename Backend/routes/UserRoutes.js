@@ -9,6 +9,9 @@ router.get('/getAllUsers',authMiddleware, adminMiddleware, userController.getAll
 // Get Users by Id (Logged-In User)
 router.get('/getUserProfile/:id',authMiddleware, userController.getMyProfile);
 
+// Get Users by username
+router.get('/getUserByUsername/:username',authMiddleware, userController.getUserProfileByUsername);
+
 // Update User's profile (Admin or User)
 router.put('/updateUserProfile/:id',authMiddleware, userController.updateUserProfile);
 

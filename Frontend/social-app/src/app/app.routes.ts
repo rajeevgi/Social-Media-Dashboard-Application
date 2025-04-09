@@ -10,6 +10,7 @@ import { UpdatePostComponent } from './component/posts/update-post/update-post.c
 import { DeletePostComponent } from './component/posts/delete-post/delete-post.component';
 import { LikePostComponent } from './component/posts/like-post/like-post.component';
 import { authGuard } from './guard/auth.guard';
+import { GetUserComponent } from './component/user/get-user/get-user.component';
 
 export const routes: Routes = [
   {
@@ -65,6 +66,12 @@ export const routes: Routes = [
         component: LikePostComponent,
         canActivate:[authGuard]
       },
+
+      {
+        path: 'get-user/:username',
+        component: GetUserComponent,
+        canActivate:[authGuard]
+      }
     ],
   },
   {

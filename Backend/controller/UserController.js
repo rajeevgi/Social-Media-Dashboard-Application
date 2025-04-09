@@ -28,6 +28,23 @@ exports.getMyProfile = async (req, res) => {
   }
 };
 
+// Get User Profile by using username.
+exports.getUserProfileByUsername = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    const user = await User.findOne({ username : username });
+
+    if(!user){
+      return res.status(404).json({ message : "User not found!" });
+    }
+
+    res.status(200).json({ message : "User Profile found", user });
+  } catch (error) {
+     return res.status(500).json({ message : "Internal Server Error!" }); 
+  }
+};
+
 // Admin or User Data Update.
 exports.updateUserProfile = async (req, res) => {
   try {

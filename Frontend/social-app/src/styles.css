@@ -1,1 +1,288 @@
 /* You can add global styles to this file, and also import other style files */
+/* Global Styles */
+.parent {
+    background-color: #f0f2f5;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+  
+  .nav-user-icon img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .navbar-nav img {
+    width: 24px;
+    cursor: pointer;
+  }
+  
+  /* Sidebar */
+  .card-body ul li {
+    margin: 10px 0;
+  }
+  
+  .card-body ul li img {
+    margin-right: 8px;
+  }
+  
+  .card-body ul li a {
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .card-body ul li a:hover {
+    text-decoration: underline;
+  }
+
+
+  /* Sticky Sidebar */
+  .sticky-sidebar {
+    position: sticky;
+    top: 70px; /* distance from top */
+    height: calc(100vh - 70px); /* full height minus navbar */
+    overflow-y: auto;
+    padding-right: 10px;
+  }
+    
+  .sticky-sidebar::-webkit-scrollbar {
+    width: 5px;
+  }
+  .sticky-sidebar::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+  }
+  
+
+  /* Optional: To prevent overlapping or layout breaking */
+  @media (max-width: 768px) {
+    .sticky-sidebar {
+      position: static;
+    }
+  }
+  
+  /* Online Status */
+  .online-list {
+    position: relative;
+  }
+  
+  .online-list img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .online::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #4cd137;
+    border-radius: 50%;
+    bottom: 2px;
+    right: 2px;
+    border: 2px solid white;
+  }
+  
+  /* Story Section */
+  .story-gallery div {
+    text-align: center;
+    margin-right: 10px;
+  }
+  
+  .story-gallery p {
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  /* Post Section */
+  .post-profile-icon img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .post-img {
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+  
+  .load-more-btn {
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+  }
+  
+  /* Footer */
+  .footer {
+    background: #fff;
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    color: #555;
+    border-top: 1px solid #ddd;
+  }
+  
+  /* Buttons */
+  .card-body a {
+    text-decoration: none;
+    color: #555;
+    font-size: 14px;
+  }
+  
+  .card-body a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Small screen adjustments */
+  @media (max-width: 768px) {
+    .navbar-nav {
+      gap: 10px;
+    }
+    .nav-user-icon {
+      margin-left: 10px;
+    }
+  }
+  
+
+  /* Comment sections */
+  /* Comments Section */
+.comments-section {
+  background: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin-top: 10px;
+}
+
+/* Comments List */
+.comment-list {
+  max-height: 250px;
+  overflow-y: auto;
+  padding-bottom: 10px;
+}
+
+/* Individual Comment */
+.comment {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+}
+
+/* User Profile Picture */
+.comment-user-pic {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+/* Comment Content */
+.comment-content {
+  background: #f0f2f5;
+  padding: 10px 14px;
+  border-radius: 15px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.comment-username {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.comment-text {
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+/* Add Comment Input */
+.comment-input {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+.comment-input input {
+  flex: 1;
+  border: none;
+  padding: 8px;
+  border-radius: 20px;
+  background: #f0f2f5;
+  outline: none;
+}
+
+.comment-input button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+/* Delete Icon */
+.delete-icon {
+  color: red;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 10px;
+  display: inline-block;
+  transition: transform 0.2s ease-in-out;
+}
+
+.delete-icon:hover {
+  transform: scale(1.2);
+}
+
+/* Update Icon */
+.edit-input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.save-btn, .cancel-btn {
+  margin-left: 5px;
+  padding: 3px 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.save-btn {
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.cancel-btn {
+  background-color: gray;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+
+.edit-icon {
+  color: green;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 10px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.edit-icon:hover {
+  transform: scale(1.2);
+}
+  
